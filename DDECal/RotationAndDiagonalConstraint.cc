@@ -137,15 +137,8 @@ vector<Constraint::Result> RotationAndDiagonalConstraint::Apply(
         } while (abs(b)/bmean > maxratio);
       }
 
-      // Use station 0 as reference station (for every chanblock), to work
-      // around unitary ambiguity
-      if (ant==0) {
-        angle0 = angle;
-        angle = 0.;
-      } else {
-        angle -= angle0;
-        angle = fmod(angle + 3.5*M_PI, M_PI) - 0.5*M_PI;
-      }
+      angle = fmod(angle + 3.5*M_PI, M_PI) - 0.5*M_PI;
+
       _res[0].vals[ant*_nChannelBlocks + ch] = angle;  // TODO directions!
       _res[1].vals[ant*_nChannelBlocks*2 + 2*ch    ] = abs(a);
       _res[1].vals[ant*_nChannelBlocks*2 + 2*ch + 1] = abs(b);
